@@ -1,9 +1,10 @@
 import logging
 import translator
+import datetime
 logging.basicConfig(level=logging.INFO)
+import pandas as pd
 
-
-def _get_vocabulary():
+def _read_vocabulary():
     with open('vocabulary.txt', 'r') as file:
         data = file.read()
     data_array = data.replace('\n', '').split(', ')
@@ -25,7 +26,7 @@ def _get_translate_to_japanese_links(vocab_array):
 if __name__ == '__main__':
 
     #read vocabulary list
-    vocab_array = _get_vocabulary()
+    vocab_array = _read_vocabulary()
 
     #translate to english
     translate_to_english_links = _get_translate_to_english_links(vocab_array)
@@ -35,6 +36,14 @@ if __name__ == '__main__':
     transate_to_japanese_links = _get_translate_to_japanese_links(english_words_array)
     japanese_words_with_furigana_array = translator.get_japanese_translations_and_furigana(transate_to_japanese_links)
 
-    #write the list with translations
+    #include spanish meaning
+    data = pd.DataFrame(japanese_words_with_furigana_array, columns=['Japones', 'Hiragana'])
+    data['Significado'] = vocab_array
+    logging.info(data)
 
+    #Save data to csv
+    now = datetime.datetime.now().strftime('%Y_%m_%d')
+    out_file_name = 'translations_{datetime}.csv'.format(
+        datetime=now)
+    data.to_csv(out_file_name)
 
