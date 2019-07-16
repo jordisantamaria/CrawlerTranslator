@@ -7,7 +7,9 @@ import pandas as pd
 def _read_vocabulary():
     with open('vocabulary.txt', 'r') as file:
         data = file.read()
-    data_array = data.replace('\n', '').split(', ')
+    logging.info(data)
+    data_array = data.split('\n')
+    data_array.remove('')
     logging.info(data_array)
     return data_array
 
@@ -38,12 +40,15 @@ if __name__ == '__main__':
 
     #include spanish meaning
     data = pd.DataFrame(japanese_words_with_furigana_array, columns=['Japones', 'Hiragana'])
-    data['Significado'] = vocab_array
+    try:
+        data['Significado'] = vocab_array
+    except:
+        print("An error ocurred adding the significate on the array")
+
     logging.info(data)
 
-    #Save data to csv
+    # Save data to csv
     now = datetime.datetime.now().strftime('%Y_%m_%d')
     out_file_name = 'translations_{datetime}.csv'.format(
         datetime=now)
     data.to_csv(out_file_name)
-
