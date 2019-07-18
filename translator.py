@@ -32,7 +32,7 @@ def get_japanese_translations_and_furigana(translate_to_japanese_links):
         selection = soup.select('div.concept_light-wrapper span.text')
         if (selection and len(selection) >= 1):
             wordJapanese = soup.select('div.concept_light-wrapper span.text')[0].text.replace('\n', '').replace(' ', '')
-            furigana = soup.select('div.concept_light-wrapper span.furigana span')[0].text
+            furigana = soup.select('div.concept_light-wrapper span.furigana')[0].text
             japaneseWordsArray.append([wordJapanese, furigana])
         else:
             japaneseWordsArray.append(['', ''])

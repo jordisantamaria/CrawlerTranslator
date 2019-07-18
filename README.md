@@ -1,5 +1,5 @@
 # CrawlerTranslator
-A crawler who use online dictionarys to translate a input of Spanish words to Japanese
+A crawler which use online dictionarys to translate a input of Spanish words to Japanese
 
 Requirements generated automatically with pip freeze > requirements.txt
 
